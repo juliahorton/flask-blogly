@@ -17,8 +17,7 @@ class User(db.Model):
 
     __tablename__ = "users"
 
-    id = db.Column(db.Integer,
-                   primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.Text, nullable=False)
     last_name = db.Column(db.Text, nullable=False)
     image_url = db.Column(db.Text, default=default_url)
@@ -28,6 +27,6 @@ class User(db.Model):
         user = self
         return f"<User {user.id} {user.first_name} {user.last_name}>"
     
-    def full_name(self):
+    def get_full_name(self):
         """Get user's full name."""
         return f"{self.first_name} {self.last_name}"

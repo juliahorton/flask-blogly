@@ -7,11 +7,11 @@
 {% block content %}
 
     {% if user.image_url %}
-    <img src="{{user.image_url}}" alt="{{user.full_name()}}">
+    <img src="{{user.image_url}}" alt="{{user.get_full_name()}}">
     {% endif %}
 
     <div class="user-row">
-        <h1>{{user.full_name()}}</h1>
+        <h1>{{user.get_full_name()}}</h1>
 
         <form>
             <button class="btn" formmethod="GET" formaction="/users/{{user.id}}/edit">Edit</button>

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Post for {{user.get_full_name()}}
+{% endblock %}
+
+{% block content %}
+
+<form method="POST" id="new-post-form">
+    <div class="row mb-3">
+        <div class="col-1">
+            <label class="col-form-label" for="post-title">Title</label>
+        </div>
+        <div class="col-8">
+            <input class="form-control" name="post-title" type="text" minlength="1" maxlength="40" placeholder="Enter a title" required>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-1">
+            <label class="col-form-label" for="post-content">Content</label>
+        </div>
+        <div class="col-8">
+            <textarea class="form-control" name="post-content" minlength="50" maxlength="1000" rows="5" columns="33" placeholder="What's on your mind?" required></textarea>
+        </div>
+    </div>
+
+    <a class="btn btn-danger" href="/users/{{user.id}}">Cancel</a>
+    <button class="btn btn-primary" type="submit">Add</button>
+</form>
+
+{% endblock %}

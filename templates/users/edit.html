@@ -1,29 +1,43 @@
 {% extends "base.html" %}
 
 {% block title %}
-<h1>Edit a User</h1>
+Edit a User
 {% endblock %}
 
 {% block content %}
 
 <form method="POST">
-    <div class="form-row">
-        <label for="first-name">First Name</label>
-        <input name="first-name" type="text" value="{{user.first_name}}" required>
+    <div class="row mb-3">
+        <div class="col-auto">
+            <label class="col-form-label" for="first-name">First Name</label>
+        </div>
+        <div class="col-auto">
+            <input class="form-control" name="first-name" type="text" value="{{user.first_name}}" required>
+        </div>
     </div>
 
-    <div class="form-row">
-        <label for="last-name">Last Name</label>
-        <input name="last-name" type="text" value="{{user.last_name}}" required>
+    <div class="row mb-3">
+        <div class="col-auto">
+            <label class="col-form-label" for="last-name">Last Name</label>
+        </div>
+        <div class="col-auto">
+            <input class="form-control" name="last-name" type="text" value="{{user.last_name}}" required>
+        </div>
+        
     </div>
 
-    <div class="form-row">
-        <label for="image-url">Image URL</label>
-        <input name="image-url" type="url" value="{{user.image_url}}">
+    <div class="row mb-4">
+        <div class="col-auto">
+            <label class="col-form-label" for="image-url">Image URL</label>
+        </div>
+        <div class="col">
+            <input class="form-control" name="image-url" type="url" value="{{user.image_url}}">
+        </div>
+        
     </div>
 
-    <a class="btn" href="/users/{{user.id}}">Cancel</a>
-    <button class="btn" type="submit">Save</button>
+    <a class="btn btn-outline-primary" href="/users/{{user.id}}">Cancel</a>
+    <button class="btn btn-primary" type="submit">Save</button>
 
 </form>
 

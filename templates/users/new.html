@@ -1,28 +1,40 @@
 {% extends "base.html" %}
 
 {% block title %}
-<h1>Create a User</h1>
+Create a User
 {% endblock %}
 
 {% block content %}
 
 <form method="POST" id="new-user-form">
-    <div class="form-row">
-        <label for="first-name">First Name</label>
-        <input name="first-name" type="text" placeholder="Enter a first name" required>
+    <div class="row mb-3 align-items-center">
+        <div class="col-auto">
+            <label class="col-form-label" for="first-name">First Name</label>
+        </div>
+        <div class="col-auto">
+            <input class="form-control" name="first-name" type="text" placeholder="Enter a first name" required>
+        </div>
     </div>
 
-    <div class="form-row">
-        <label for="last-name">Last Name</label>
-        <input name="last-name" type="text" placeholder="Enter a last name" required>
+    <div class="row mb-3 align-items-center">
+        <div class="col-auto">
+            <label class="col-form-label" for="last-name">Last Name</label>
+        </div>
+        <div class="col-auto">
+             <input class="form-control" name="last-name" type="text" placeholder="Enter a last name" required>
+        </div>
     </div>
 
-    <div class="form-row">
-        <label for="image-url">Image URL</label>
-        <input name="image-url" type="url" placeholder="Enter an image URL">
+    <div class="row mb-3 align-items-center">
+        <div class="col-auto">
+            <label class="col-form-label" for="image-url">Image URL</label>
+        </div>
+        <div class="col-auto">
+            <input class="form-control" name="image-url" type="url" placeholder="Enter an image URL">
+        </div>
     </div>
 
-    <button class="btn">Add</button>
+    <button class="btn btn-primary">Add</button>
 
 </form>
 

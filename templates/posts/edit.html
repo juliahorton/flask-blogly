@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+Edit Post
+{% endblock %}
+
+{% block content %}
+
+<form method="POST">
+    <div class="row mb-3">
+        <div class="col-1">
+            <label class="col-form-label" for="post-title">Title</label>
+        </div>
+        <div class="col-8">
+            <input class="form-control" name="post-title" type="text" minlength="1" maxlength="40" value="{{post.title}}" required>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-1">
+            <label class="col-form-label" for="post-content">Content</label>
+        </div>
+        <div class="col-8">
+            <textarea class="form-control" name="post-content" minlength="50" maxlength="1000" rows="5" columns="33" required>{{post.content}}</textarea>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-auto">
+            <a class="btn btn-outline-primary" href="/users/{{user.id}}">Cancel</a>
+            <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+        
+    </div>
+    
+
+</form>
+
+
+{% endblock %}

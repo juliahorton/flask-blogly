@@ -7,15 +7,25 @@ Users
 {% block content %}
 
     <ul id="user-list">
-
         {% for user in users %}
             <li>
                 <a href="users/{{ user.id }}">{{ user.get_full_name() }}</a>
             </li>
         {% endfor %}
-
     </ul>
 
-    <p><a class="btn btn-primary" href="users/new">Add user</a></p>
+    <a class="btn btn-primary" href="users/new">Add user</a>
+
+    <h1 class="mt-3 mb-3">Tags</h1>
+
+    <ul id="tags-list">
+        {% for tag in tags %}
+            <li>
+                <a href="tags/{{tag.id}}">{{tag.name}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a class="btn btn-primary" href="tags/new">Add tag</a>
 
 {% endblock %}

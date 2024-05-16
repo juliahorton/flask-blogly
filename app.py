@@ -2,7 +2,7 @@
 
 from flask import Flask, request, redirect, render_template
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, connect_db, User, Post
+from models import db, connect_db, User, Post, Tag
 import datetime
 
 app = Flask(__name__)
@@ -33,7 +33,9 @@ def show_users():
     
         users = User.query.order_by(User.last_name, User.first_name).all()
 
-        return render_template("users/index.html", users=users)
+        tags = Tag.query.order_by(Tag.id).all()
+
+        return render_template("users/index.html", users=users, tags=tags)
     
 
 @app.route("/users/new", methods=["GET"])
@@ -105,7 +107,9 @@ def add_post(user_id):
 
     user = User.query.get_or_404(user_id)
 
-    return render_template("posts/new.html", user=user)
+    tags = Tag.query.order_by(Tag.id).all()
+
+    return render_template("posts/new.html", user=user, tags=tags)
 
 @app.route("/users/<int:user_id>/posts/new", methods=["POST"])
 def handle_new_post(user_id):
@@ -118,6 +122,11 @@ def handle_new_post(user_id):
     created_at = datetime.datetime.now()
 
     post = Post(title=title, content=content, created_at=created_at, user_id=user_id)
+
+    tags = request.form.getlist('tags')
+    
+    for tag in tags:
+        post.associated_tags.append(Tag.query.filter(Tag.name == tag).one())
 
     db.session.add(post)
     db.session.commit()
@@ -139,8 +148,9 @@ def show_edit_post(post_id):
 
     post = Post.query.get_or_404(post_id)
     user = User.query.get_or_404(post.user_id)
+    tags = Tag.query.order_by(Tag.id).all()
 
-    return render_template("posts/edit.html", post=post, user=user)
+    return render_template("posts/edit.html", post=post, user=user, tags=tags)
 
 @app.route("/posts/<int:post_id>/edit", methods=["POST"])
 def handle_edit_post(post_id):
@@ -150,6 +160,12 @@ def handle_edit_post(post_id):
 
     post.title = request.form["post-title"]
     post.content = request.form["post-content"]
+    post.associated_tags = []
+
+    tags = request.form.getlist('tags')
+    
+    for tag in tags:
+        post.associated_tags.append(Tag.query.filter(Tag.name == tag).one())
     
     db.session.add(post)
     db.session.commit()
@@ -168,3 +184,65 @@ def delete_post(post_id):
     db.session.commit()
 
     return redirect(f"/users/{user.id}")
+
+@app.route("/tags")
+def tags():
+     
+     tags = Tag.query.order_by(Tag.id).all()
+
+     return render_template("tags/index.html", tags=tags)
+
+@app.route("/tags/<int:tag_id>")
+def show_tag(tag_id):
+     
+    tag = Tag.query.get_or_404(tag_id)
+
+    posts = tag.associated_posts
+
+    return render_template("tags/show.html", tag=tag, posts=posts)
+
+
+@app.route("/tags/new")
+def add_tag():
+     
+     return render_template("tags/new.html")
+
+@app.route("/tags/new", methods=["POST"])
+def handle_add_tag():
+     
+    name = request.form["tag-name"]
+
+    tag = Tag(name=name)
+
+    db.session.add(tag)
+    db.session.commit()
+
+    return redirect("/tags")
+
+
+@app.route("/tags/<int:tag_id>/edit")
+def show_edit_tag(tag_id):
+     
+    tag = Tag.query.get_or_404(tag_id)
+
+    return render_template("tags/edit.html", tag=tag)
+
+@app.route("/tags/<int:tag_id>/edit", methods=["POST"])
+def handle_edit_tag(tag_id):
+     
+    tag = Tag.query.get_or_404(tag_id)
+
+    tag.name = request.form['tag-name']
+
+    db.session.add(tag)
+    db.session.commit()
+
+    return redirect(f"/tags/{tag.id}")
+
+@app.route("/tags/<int:tag_id>/delete", methods=["POST"])
+def delete_tag(tag_id):
+
+    Tag.query.filter_by(id=tag_id).delete()
+    db.session.commit()
+
+    return redirect('/tags')

@@ -51,3 +51,31 @@ class Post(db.Model):
         """Show information about blog post."""
         post = self
         return f"<Post {post.id} {post.title}>"
+    
+    associated_tags = db.relationship('Tag', secondary='posts_tags', backref='associated_posts')
+    
+class PostTag(db.Model):
+    """Model to join together the Post model and Tag model."""
+
+    __tablename__ = "posts_tags"
+
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), primary_key=True)
+    tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), primary_key=True)
+
+    def __repr__(self):
+        """Show information about PostTag."""
+        post_tag = self
+        return f"<PostTag post:{post_tag.post_id} tag:{post_tag.tag_id}>"
+    
+class Tag(db.Model):
+    """Tag."""
+
+    __tablename__ = "tags"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        """Show information about tag."""
+        tag = self
+        return f"<Tag {tag.id} {tag.name}>"

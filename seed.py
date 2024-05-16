@@ -1,7 +1,7 @@
 """Seed file to make sample data for Blogly database."""
 
 from app import app
-from models import db, User, Post
+from models import db, User, Post, PostTag, Tag
 
 # Create all tables within the application context
 app.app_context().push()
@@ -53,4 +53,22 @@ post_3 = Post(
 db.session.add_all([post_1, post_2, post_3])
 
 # Commit 
+db.session.commit()
+
+# Add tags for posts 
+
+tag_1 = Tag(name = "personal")
+
+tag_2 = Tag(name = "family")
+
+tag_3 = Tag(name = "conceptual")
+
+tag_4 = Tag(name = "real thinkers tap in")
+
+# Add tags to session
+
+db.session.add_all([tag_1, tag_2, tag_3, tag_4])
+
+# Commit 
+
 db.session.commit()

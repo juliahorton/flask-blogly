@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+Edit tag
+{% endblock %}
+
+
+{% block content %}
+
+<form method="POST">
+    <div class="row mb-3">
+        <div class="col-1">
+            <label class="col-form-label" for="tag-name">Name</label>
+        </div>
+        <div class="col-8">
+            <input class="form-control" name="tag-name" type="text" minlength="1" maxlength="40" value="{{tag.name}}" required>
+        </div>
+    </div>
+    <a class="btn btn-outline-primary" href="/tags/{{tag.id}}">Cancel</a>
+    <button class="btn btn-primary" type="submit">Save</button>
+</form>
+
+{% endblock %}

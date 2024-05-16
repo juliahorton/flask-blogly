@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add a Tag
+{% endblock %}
+
+
+{% block content %}
+<form method="POST">
+    <div class="row mb-3">
+        <div class="col-1">
+            <label class="col-form-label" for="tag-name">Name</label>
+        </div>
+        <div class="col-8">
+            <input class="form-control" name="tag-name" type="text" minlength="1" maxlength="40" required>
+        </div>
+    </div>
+    <a class="btn btn-outline-primary" href="/tags">Cancel</a>
+    <button class="btn btn-primary" type="submit">Add</button>
+</form>
+{% endblock %}
